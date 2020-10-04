@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>com.meetingRooms.service.loginServiceInterface</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>Logout</servlet-name>
+  	<display-name>Logout</display-name>
+  	<description></description>
+  	<servlet-class>com.meetingRooms.controller.Logout</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Login</servlet-name>
   	<url-pattern>/Login</url-pattern>
@@ -23,5 +29,9 @@
   <servlet-mapping>
   	<servlet-name>loginServiceInterface</servlet-name>
   	<url-pattern>/loginServiceInterface</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Logout</servlet-name>
+  	<url-pattern>/Logout</url-pattern>
   </servlet-mapping>
 </web-app>

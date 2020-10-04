@@ -2,6 +2,33 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@ page isELIgnored="false" %>
+
+
+<%
+		// check for existing session
+
+	if ( session.getAttribute ( "role" ) == null ) {
+		
+			// session does not exists
+			// do nothing			
+	
+	} else { // session exists
+		
+		if ( session.getAttribute ( "role" ).toString().equals ( "member" ) ) {
+			
+			request.getRequestDispatcher("member.jsp").forward ( request, response );
+			
+		} else if ( session.getAttribute ( "role" ).toString().equals ( "admin" ) ) {
+			
+			request.getRequestDispatcher("AdminHomePage.jsp").forward ( request, response );
+			
+		} else {
+			
+			request.getRequestDispatcher("ManagerHomePage.jsp").forward ( request, response );
+		}
+	}
+
+%>
     
 <!DOCTYPE html>
 
@@ -152,7 +179,7 @@ ${login_page_message}
 							<div class="input-group">
   							
   								<span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-  								<input type="text" placeholder="ID" name="library_login_username" class="form-control" required>
+  								<input type="text" placeholder="ID" name="user_id" id="user_id" class="form-control" required>
 							
 							</div>
 							
@@ -165,7 +192,7 @@ ${login_page_message}
 							<div class="input-group">
   							
   									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-  									<input type="password" placeholder="Password" name="library_login_password" class="form-control" required>
+  									<input type="password" placeholder="Password" name="user_password" id="user_password" class="form-control" required>
 							
 							</div>
 						

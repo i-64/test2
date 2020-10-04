@@ -3,6 +3,12 @@
     
 <%@ page isELIgnored="false" %>
 
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "java.sql.DriverManager" %>
+<%@ page import = "java.sql.PreparedStatement" %>
+<%@ page import = "java.sql.ResultSet" %>
+<%@ page import = "java.sql.SQLException" %>
+
 <!DOCTYPE html>
 
 <html>
@@ -52,7 +58,16 @@
 	      		<li class="active"> <a href="index.jsp"> Home </a> </li>
 	      	
 	      		<li> <a href="#"> Import Users </a> </li>
-	      		<li> <a href="login.jsp"> Login </a> </li>	      		
+	      		
+	      		<% if ( session.getAttribute ( "role" ) == null ) { %>
+                    
+                <li> <a href="login.jsp"> Login </a> </li>
+                    
+                <% } else { %>
+                    
+                <li> <a href="Logout"> Logout </a> </li>
+                    
+                <% } %>	      		
 	      		
 	    	</ul>
 	    	
@@ -64,7 +79,85 @@
 
 <!-- NAVBAR -->
 
+<div class="row"> <br> <br> <br> </div>
 
+${home_page_message}
+
+<!-- DISPLAY MEETING LISTS -->
+
+
+
+<%
+	try {
+		
+		// load driver
+		
+		Class.forName ( "org.apache.derby.jdbc.EmbeddedDriver" );
+					
+		// get connection to database
+					
+		Connection con = DriverManager.getConnection ( "jdbc:derby:c:/database/meetingRoomsDB", "admin", "admin" );
+		
+		// prepare query
+		
+		PreparedStatement ps = con.prepareStatement ( "select * from meeting_room" );
+		
+		ResultSet set_1 = ps.executeQuery ();		
+%>
+		
+<div class="container">
+
+  <h2> Meetings </h2>
+          
+  <table class="table table-striped table-hover">
+  
+    <thead>
+    
+      <tr>
+      
+        <th> Meeting Room Name </th>
+        <th> Seating Capacity </th>
+        <th> Total Meeting Conducted </th>
+        <th> Rating ( out of 5 ) </th>
+        
+      </tr>
+      
+    </thead>
+    
+    <tbody>
+    
+<%
+		while ( set_1.next () ) {
+
+%>
+			<tr>
+			
+			   <td> <%=set_1.getString (1)%> </td>
+			   <td> <%=set_1.getString (2)%> </td>
+			   <td> 0 </td>
+			   <td> 0 </td>
+			 
+			</tr>
+			
+<%			
+		}
+
+	} catch ( SQLException | ClassNotFoundException e ) {
+	
+		e.printStackTrace ();
+	}
+
+%>
+  
+
+      
+    </tbody>
+    
+  </table>
+  
+</div>
+
+<!-- DISPLAY MEETING LISTS -->
 
 
 <!-- Footer -->
@@ -90,7 +183,16 @@
                 <ul>
                 
                     <li> <a href="index.jsp"> Home </a> </li>
+                    
+                    <% if ( session.getAttribute ( "role" ) == null ) { %>
+                    
                     <li> <a href="login.jsp"> Login </a> </li>
+                    
+                    <% } else { %>
+                    
+                    <li> <a href="Logout"> Logout </a> </li>
+                    
+                    <% } %>
                     
                 </ul>
                 
